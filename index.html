@@ -288,10 +288,10 @@ const $ = id => document.getElementById(id);
 function populateSelects() {
   const hours = Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));
   const mins = ['00','30'];
-  [['startHour',hours,'21'],['endHour',hours,'22']].forEach(([id,opts,def])=>{
+  [['startHour',hours,'20'],['endHour',hours,'21']].forEach(([id,opts,def])=>{
     const sel=$(id); opts.forEach(v=>{ const o=document.createElement('option'); o.value=v; o.textContent=v; sel.appendChild(o); }); sel.value=def;
   });
-  [['startMin',mins,'30'],['endMin',mins,'30']].forEach(([id,opts,def])=>{
+  [['startMin',mins,'00'],['endMin',mins,'00']].forEach(([id,opts,def])=>{
     const sel=$(id); opts.forEach(v=>{ const o=document.createElement('option'); o.value=v; o.textContent=v; sel.appendChild(o); }); sel.value=def;
   });
 }
