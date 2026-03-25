@@ -421,7 +421,8 @@ async function exportImage(mode) {
     const fileName=`schedule_${currentYear}${String(currentMonth+1).padStart(2,'0')}.png`;
     canvas.toBlob(async blob=>{
       const file=new File([blob],fileName,{type:'image/png'});
-      if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+      const isMobile='ontouchstart' in window||navigator.maxTouchPoints>0;
+      if(isMobile&&navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
         try { await navigator.share({files:[file]}); }
         catch(e){ if(e.name!=='AbortError') toast('共有に失敗しました'); }
       } else {
