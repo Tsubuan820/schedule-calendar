@@ -431,7 +431,7 @@ function copyText() {
   const sorted=[...selected].sort((a,b)=>a-b);
   const lines=sorted.map(d=>{
     const date=new Date(currentYear,currentMonth,d);
-    return `${currentYear}/${currentMonth+1}/${d}（${DAYS[date.getDay()]}）${getTimeLabelText()}`;
+    return `${currentMonth+1}月${d}日（${DAYS[date.getDay()]}） ${getTimeLabelText()}`;
   });
   navigator.clipboard.writeText(lines.join('\n')).then(()=>toast('テキストをコピーしました'));
 }
