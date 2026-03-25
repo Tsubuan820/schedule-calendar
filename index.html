@@ -418,11 +418,21 @@ async function exportImage(mode) {
       catch{ toast('コピーに失敗しました'); }
     },'image/png');
   } else {
-    const a=document.createElement('a');
-    a.download=`schedule_${currentYear}${String(currentMonth+1).padStart(2,'0')}.png`;
-    a.href=canvas.toDataURL('image/png');
-    a.click();
-    toast('ダウンロードしました');
+    const fileName=`schedule_${currentYear}${String(currentMonth+1).padStart(2,'0')}.png`;
+    canvas.toBlob(async blob=>{
+      const file=new File([blob],fileName,{type:'image/png'});
+      if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+        try { await navigator.share({files:[file]}); }
+        catch(e){ if(e.name!=='AbortError') toast('共有に失敗しました'); }
+      } else {
+        const a=document.createElement('a');
+        a.download=fileName;
+        a.href=URL.createObjectURL(blob);
+        a.click();
+        URL.revokeObjectURL(a.href);
+        toast('ダウンロードしました');
+      }
+    },'image/png');
   }
 }
 
